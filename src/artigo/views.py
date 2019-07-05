@@ -64,7 +64,7 @@ def listar_artigos(request):
     if user.is_authenticated:
         usuario = User.objects.get(id=user.id)
 
-        artigos = Artigo.objects.order_by('-dataPublicacao')
+        artigos = Artigo.objects.order_by('-data_publicacao')
         categorias = Categoria.objects.all()
         context = {'usuario': usuario,
                    'artigos': artigos, 'categorias': categorias}

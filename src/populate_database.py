@@ -21,17 +21,17 @@ from faker import Faker
 fake = Faker()
 
 categoria = [
-    'Lazer', 'Intelecto', 'Saúde', 'Vida Financeira', 
+    'Lazer', 'Intelecto', 'Saúde', 'Vida Financeira',
     'Amigos e Familia', 'Trabalho e Carreira', 'Espiritualidade', 'Amor',
 ]
 enunciado = [
-	'Consegue aproveitar os momentos em que você faz aquilo que gosta?',
+    'Consegue aproveitar os momentos em que você faz aquilo que gosta?',
     'Você tem investido tempo, e buscado evoluir seus conhecimentos?',
-	'Sua alimentação é equilibrada, você faz exercícios físicos, não usa drogas (incluindo álcool) e dorme bem?',
-	'Você não tem problemas com seu dinheiro, e tem ao menos o suficiente pra ter uma vida confortável?',
-	'Sua relação com seus amigos e/ou familiares é muito boa?',
-	'Você se sente bem em seu ambiente de trabalho e/ou estudo?',
-	'Você é uma pessoa grata com as pessoas que estão ao seu redor, e pelos bens que você já tem?',
+    'Sua alimentação é equilibrada, você faz exercícios físicos, não usa drogas (incluindo álcool) e dorme bem?',
+    'Você não tem problemas com seu dinheiro, e tem ao menos o suficiente pra ter uma vida confortável?',
+    'Sua relação com seus amigos e/ou familiares é muito boa?',
+    'Você se sente bem em seu ambiente de trabalho e/ou estudo?',
+    'Você é uma pessoa grata com as pessoas que estão ao seu redor, e pelos bens que você já tem?',
     'Você é uma pessoa que se sente amada, e se sente capaz de amar outras pessoas?',
 ]
 image_paths = [
@@ -45,8 +45,10 @@ image_paths = [
     '../static/images/category/8.jpg',
 ]
 
+
 def get_artigo_info():
-    fake_titulo = fake.sentence(nb_words=5, variable_nb_words=True, ext_word_list=None)
+    fake_titulo = fake.sentence(
+        nb_words=5, variable_nb_words=True, ext_word_list=None)
     fake_texto = fake.text(max_nb_chars=6000, ext_word_list=None)
     fake_imagem = image_paths[random.randrange(8)]
     fake_autor = fake.name()
@@ -64,8 +66,10 @@ def get_artigo_info():
 
     return artigo
 
+
 def get_atividade_info():
-    fake_titulo = fake.sentence(nb_words=5, variable_nb_words=True, ext_word_list=None)
+    fake_titulo = fake.sentence(
+        nb_words=5, variable_nb_words=True, ext_word_list=None)
     fake_descricao = fake.text(max_nb_chars=200, ext_word_list=None)
     fake_dicas = fake.text(max_nb_chars=500, ext_word_list=None)
     fake_imagem = image_paths[random.randrange(8)]
@@ -79,21 +83,24 @@ def get_atividade_info():
 
     return atividade
 
+
 def populate_categorias():
     print("Populating categorias...")
     for i in range(8):
         c = Categoria.objects.get_or_create(nome=categoria[i])
 
+
 def populate_perguntas():
     print("Populating perguntas...")
     categorias = Categoria.objects.all()
 
-    i=0
+    i = 0
     for c in categorias:
         p = Pergunta.objects.get_or_create(
             enunciado=enunciado[i], categoria=c
         )
-        i+=1
+        i += 1
+
 
 def populate_artigos():
     print("Populating artigos...")
@@ -105,11 +112,12 @@ def populate_artigos():
         a = Artigo.objects.get_or_create(
             titulo=artigo['titulo'],
             texto=artigo['texto'],
-            imagem=artigo['imagem'], 
+            imagem=artigo['imagem'],
             autor=artigo['autor'],
-            dataPublicacao=artigo['data_pub'], 
+            data_publicacao=artigo['data_pub'],
             categoria=categorias[i % 3],
         )
+
 
 def populate_atividades():
     print("Populating atividades...")
@@ -125,6 +133,7 @@ def populate_atividades():
             imagem=atividade['imagem'],
             categoria=categorias[i % 3],
         )
+
 
 if __name__ == '__main__':
     print("Running populate script...")
